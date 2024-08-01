@@ -9,5 +9,11 @@ use modules::tasks;
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build().mount("/", routes![tasks::list::controller::index])
+    rocket::build().mount(
+        "/",
+        routes![
+            tasks::list::controller::index,
+            tasks::create::controller::index
+        ],
+    )
 }

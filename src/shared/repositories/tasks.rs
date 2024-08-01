@@ -1,8 +1,11 @@
 use diesel::{dsl::count, ExpressionMethods, QueryDsl, RunQueryDsl, SelectableHelper};
 
 use crate::{
-    schema::tasks::dsl::*,
-    shared::{entities::tasks::Task, utils::database::establish_connection},
+    schema::tasks::{self, dsl::*},
+    shared::{
+        entities::tasks::{NewTask, Task},
+        utils::database::establish_connection,
+    },
 };
 
 pub fn find(per_page: usize, page: usize) -> (i64, Vec<Task>) {
@@ -22,4 +25,14 @@ pub fn find(per_page: usize, page: usize) -> (i64, Vec<Task>) {
         .expect("Error loading tasks");
 
     (count, results)
+}
+
+pub fn create(body: NewTask) -> Task {
+    let connection = &mut establish_connection();
+
+    diesel::insert_into(tasks::table)
+        .values(&body)
+        .returning(Task::as_returning())
+        .get_result(connection)
+        .expect("Error saving new task")
 }
