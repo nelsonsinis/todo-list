@@ -1,13 +1,14 @@
-use crate::shared::{repositories::tasks as repository, structs::application::ListResponse};
+use crate::shared::{
+    dtos::response::ResponseTaskDTO, repositories::tasks as repository,
+    structs::application::ListResponse,
+};
 
-use super::response_dto::TaskResponseDTO;
-
-pub fn execute(per_page: usize, page: usize) -> ListResponse<TaskResponseDTO> {
-    let mut tasks: Vec<TaskResponseDTO> = Vec::new();
+pub fn execute(per_page: usize, page: usize) -> ListResponse<ResponseTaskDTO> {
+    let mut tasks: Vec<ResponseTaskDTO> = Vec::new();
     let (total_tasks, results) = repository::find(per_page, page);
 
     for task in results {
-        tasks.push(TaskResponseDTO::new(task))
+        tasks.push(ResponseTaskDTO::new(task))
     }
 
     ListResponse {
