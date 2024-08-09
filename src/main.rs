@@ -15,7 +15,8 @@ fn rocket() -> _ {
             tasks::list::controller::index,
             tasks::create::controller::index,
             tasks::get::controller::index,
-            tasks::delete::controller::index
+            tasks::delete::controller::index,
+            tasks::update::controller::index,
         ],
     )
 }

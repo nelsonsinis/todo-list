@@ -3,7 +3,7 @@ use rocket::http::Status;
 use crate::shared::{repositories::tasks as repository, structs::application::ErrorResponse};
 
 pub fn execute(id: &str) -> Result<(), ErrorResponse> {
-    if let None = repository::find_by_id(id) {
+    if repository::find_by_id(id).is_none() {
         return Err(ErrorResponse {
             status: Some(Status::NotFound),
             message: "task-not-found",

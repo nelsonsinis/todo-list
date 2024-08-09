@@ -24,3 +24,11 @@ pub struct NewTask {
     pub description: Option<String>,
     pub checked: bool,
 }
+
+#[derive(Debug, Queryable, Selectable)]
+#[diesel(table_name = crate::schema::tasks)]
+pub struct UpdateTask {
+    pub title: String,
+    pub description: Option<String>,
+    pub checked: bool,
+}

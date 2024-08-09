@@ -4,7 +4,7 @@ use diesel::{dsl::count, ExpressionMethods, QueryDsl, RunQueryDsl, SelectableHel
 use crate::{
     schema::tasks::{self, dsl::*},
     shared::{
-        entities::tasks::{NewTask, Task},
+        entities::tasks::{NewTask, Task, UpdateTask},
         utils::database::establish_connection,
     },
 };
@@ -55,11 +55,36 @@ pub fn find_by_id(task_id: &str) -> Option<Task> {
 pub fn delete_one(task_id: &str) -> bool {
     let connection = &mut establish_connection();
 
-    match diesel::update(tasks.find(uuid::Uuid::parse_str(task_id).unwrap()))
+    diesel::update(tasks.find(uuid::Uuid::parse_str(task_id).unwrap()))
         .set(deleted_at.eq(Some(Utc::now().naive_utc())))
         .execute(connection)
+        .is_ok()
+}
+
+pub fn update_one(task_id: &str, payload: UpdateTask) -> Result<Task, ()> {
+    let connection = &mut establish_connection();
+
+    match diesel::update(tasks.find(uuid::Uuid::parse_str(task_id).unwrap()))
+        .set((
+            title.eq(payload.title),
+            description.eq(payload.description),
+            checked.eq(payload.checked),
+            updated_at.eq(Utc::now().naive_utc()),
+        ))
+        .returning(Task::as_returning())
+        .execute(connection)
     {
-        Ok(_) => true,
-        Err(_) => false,
+        Ok(_) => {
+            if let Some(task) = find_by_id(task_id) {
+                Ok(task)
+            } else {
+                eprintln!("Error: Some error occurred!");
+                Err(())
+            }
+        }
+        Err(error) => {
+            eprintln!("Error: {}", error);
+            Err(())
+        }
     }
 }
