@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+bcrypt = "0.15.1"
 chrono = { version = "0.4.38", features = ["serde"] }
 diesel = { version = "2.2.2", features = ["postgres", "chrono", "uuid"] }
 dotenvy = "0.15.7"
