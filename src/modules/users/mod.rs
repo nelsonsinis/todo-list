@@ -1,1 +1,7 @@
-pub mod create;
+use rocket::Route;
+
+mod create;
+
+pub fn routes() -> Vec<Route> {
+    routes![create::controller::index]
+}

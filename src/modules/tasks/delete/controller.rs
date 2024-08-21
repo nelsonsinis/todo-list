@@ -4,7 +4,7 @@ use crate::shared::dtos::response::CommonResponseDTO;
 
 use super::service;
 
-#[delete("/tasks/<id>")]
+#[delete("/<id>")]
 pub fn index(id: &str) -> Result<status::NoContent, status::Custom<Json<CommonResponseDTO>>> {
     match service::execute(id) {
         Ok(_) => Ok(status::NoContent),

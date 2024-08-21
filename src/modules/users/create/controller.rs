@@ -5,7 +5,7 @@ use rocket::http::Status;
 use rocket::response::status;
 use rocket::serde::json::Json;
 
-#[post("/users", data = "<body>")]
+#[post("/", data = "<body>")]
 pub fn index(
     body: Json<CreateUserDTO>,
 ) -> Result<status::Custom<Json<CreateUserResponseDTO>>, status::Custom<Json<CommonResponseDTO>>> {

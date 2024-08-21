@@ -4,7 +4,7 @@ use crate::shared::dtos::response::{CommonResponseDTO, ResponseTaskDTO};
 
 use super::service;
 
-#[get("/tasks/<id>")]
+#[get("/<id>")]
 pub fn index(id: &str) -> Result<Json<ResponseTaskDTO>, status::Custom<Json<CommonResponseDTO>>> {
     match service::execute(id) {
         Err(resp) => Err(status::Custom(

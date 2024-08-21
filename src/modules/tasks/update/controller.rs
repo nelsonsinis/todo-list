@@ -4,7 +4,7 @@ use crate::shared::dtos::response::{CommonResponseDTO, ResponseTaskDTO};
 
 use super::{request_dto::UpdateTaskDTO, service};
 
-#[patch("/tasks/<id>", data = "<body>")]
+#[patch("/<id>", data = "<body>")]
 pub fn index(
     id: &str,
     body: Json<UpdateTaskDTO>,

@@ -4,7 +4,7 @@ use crate::shared::dtos::response::ResponseTaskDTO;
 
 use super::{request_dto::CreateTaskDTO, service};
 
-#[post("/tasks", data = "<body>")]
+#[post("/", data = "<body>")]
 pub fn index(body: Json<CreateTaskDTO>) -> status::Custom<Json<ResponseTaskDTO>> {
     let task = service::execute(body);
 

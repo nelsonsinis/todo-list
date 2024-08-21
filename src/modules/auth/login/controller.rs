@@ -8,7 +8,7 @@ use super::{
     service,
 };
 
-#[post("/auth/login", data = "<body>")]
+#[post("/login", data = "<body>")]
 pub fn index(
     body: Json<LoginRequestDTO>,
 ) -> Result<

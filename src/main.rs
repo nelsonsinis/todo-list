@@ -10,16 +10,8 @@ use modules::{auth, tasks, users};
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build().mount(
-        "/",
-        routes![
-            tasks::list::controller::index,
-            tasks::create::controller::index,
-            tasks::get::controller::index,
-            tasks::delete::controller::index,
-            tasks::update::controller::index,
-            users::create::controller::index,
-            auth::login::controller::index
-        ],
-    )
+    rocket::build()
+        .mount("/auth", auth::routes())
+        .mount("/users", users::routes())
+        .mount("/tasks", tasks::routes())
 }
