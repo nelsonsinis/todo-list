@@ -6,7 +6,7 @@ mod modules;
 pub mod schema;
 mod shared;
 
-use modules::{tasks, users};
+use modules::{auth, tasks, users};
 
 #[launch]
 fn rocket() -> _ {
@@ -18,7 +18,8 @@ fn rocket() -> _ {
             tasks::get::controller::index,
             tasks::delete::controller::index,
             tasks::update::controller::index,
-            users::create::controller::index
+            users::create::controller::index,
+            auth::login::controller::index
         ],
     )
 }
